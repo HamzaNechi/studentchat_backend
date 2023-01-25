@@ -25,19 +25,30 @@ app.use(express.json());
 const hostname='localhost';
 const port=process.env.PORT || 9090;
 const databaseName = 'StudentChat';
+const mongo_url='mongodb+srv://nechi:nechi%40123@cluster0.va6izvj.mongodb.net/?retryWrites=true&w=majority'
 
 mongoose.set('debug', true);
 mongoose.Promise = global.Promise;
 
+//connect(`mongodb://localhost:27017/${databaseName}`)
+
 mongoose
-  .connect(`mongodb://localhost:27017/${databaseName}`)
+  .connect(mongo_url)
+  .then(() => {
+    console.log('Connected to mongodb.');
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+/*mongoose
+  .connect(`${mongo_url}`)
   .then(() => {
     console.log(`Connected to ${databaseName}`);
   })
   .catch(err => {
     console.log(err);
   });
-
+*/
   const server=http.createServer(app);
 
   const io=new Server(server,{
