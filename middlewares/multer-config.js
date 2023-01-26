@@ -41,9 +41,7 @@ export default multer({
             console.log("extension = "+arr[1])
             const f=file.originalname.substring(0,file.originalname.lastIndexOf("."));
             const name=f.split(" ").join("_");
-            //const extension=MIME_TYPE[file.mimetype];
-            const extension=arr[1].substring(0,3);
-            callback(null,name+Date.now()+"."+extension);
+            callback(null,name+Date.now()+"."+arr[1]);
         },
     }),
     limits:{fileSize :5*1024*1024},
