@@ -11,7 +11,7 @@ import { sendConfirmationEmail, sendResetPassword } from '../server/nodemailer.j
 export const findEmail = (req,res,next)=>{
     User.findOne
     ({email
-    :req.body.Email})
+    :req.body.Email.trim()})
     .then(user=>{
         if(user){
             sendResetPassword(user.email,user.ActivationCode)
@@ -68,7 +68,7 @@ export const register  = (req,res,next)=>{
   
     User.findOne
     ({email
-    :req.body.Email})
+    :req.body.Email.trim()})
     .then(user=>{
         if(user){
             console.log("email exist");
@@ -94,7 +94,7 @@ export const register  = (req,res,next)=>{
                 else{
                     const user = new User({
                             username: req.body.Username,
-                            email: req.body.Email,
+                            email: req.body.Email.trim(),
                             password: hash,
                             image: `${req.protocol}://${req.get('host')}/images/user/${req.file.filename}`,
                             Genre: req.body.Genre,
@@ -123,7 +123,7 @@ export const register  = (req,res,next)=>{
 }
 
 export const login = (req,res,next )=>{
-    var Username =req.body.Username
+    var Username =req.body.Username.trim()
     var Password =req.body.Password
       User.findOne({email:Username})
         .then(user =>{
